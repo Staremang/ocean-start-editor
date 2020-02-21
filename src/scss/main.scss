@@ -7,6 +7,7 @@ body {
   background: #e5e5e5;
   color: #171717;
   font-family: 'Cera Pro', sans-serif;
+  //font-family: 'Zapf Dingbats', sans-serif;
 }
 
 :focus {
@@ -18,10 +19,10 @@ html {
 
 }
 
-@page {
-  margin: auto;
-  size: landscape;
-}
+//@page {
+//  margin: auto;
+//  size: landscape;
+//}
 
 .container {
   width: 100%;
@@ -94,12 +95,13 @@ h2 {
 }
 
 h3 {
-  opacity: 0.6;
+  //opacity: 0.6;
   font-family: 'Cera Pro', sans-serif;
   font-size: 30px;
   font-style: normal;
   font-weight: normal;
   line-height: 50px;
+  color: #707070;
 }
 
 ul {
@@ -199,6 +201,7 @@ li {
 }
 
 .tpl-clients {
+  height: 2000px;
   padding-top: 160px;
   text-align: center;
 

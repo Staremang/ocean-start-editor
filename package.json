@@ -11,7 +11,7 @@
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.4",
     "html2canvas": "^1.0.0-rc.5",
-    "jspdf": "^1.5.3",
+    "jspdf": "https://github.com/MrRio/jsPDF.git",
     "register-service-worker": "^1.6.2",
     "tiptap": "^1.26.6",
     "tiptap-extensions": "^1.28.6",

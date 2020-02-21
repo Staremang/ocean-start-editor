@@ -245,11 +245,12 @@
 </template>
 
 <script>
-import jsPDF from 'jspdf/dist/jspdf.debug'
+// import jsPDF from 'jspdf/dist/jspdf.debug'
+import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 
-import halvarBreitschrift from './assets/fonts/halvar-breitschrift/halvar-breitschrift-bold'
-import ceraPro from './assets/fonts/cera-pro/CeraPro-Regular'
+// import halvarBreitschrift from './assets/fonts/halvar-breitschrift/halvar-breitschrift-bold'
+// import ceraPro from './assets/fonts/cera-pro/CeraPro-Regular'
 
 import Slide from './components/Slide.vue'
 import SlideTable from './components/SlideTable.vue'
@@ -318,12 +319,6 @@ export default {
   },
 
   mounted () {
-    window.addEventListener('afterprint', () => {
-      if (this.printIframe) {
-        this.printIframe.remove()
-        this.printIframe = null
-      }
-    })
   },
 
   beforeDestroy () {
@@ -331,34 +326,29 @@ export default {
 
   methods: {
     async print (type) {
-      // const f = [this.$refs.slide1.offsetHeight, this.$refs.slide1.offsetWidth]
-
       const slideWidth = 1920
 
       // eslint-disable-next-line new-cap
       const doc = new jsPDF({
-        orientation: 'l',
+        // orientation: 'l',
         unit: 'pt',
-        // compress: true,
-        format: [
-          // this.$refs.slide1.offsetHeight + 0.01,
-          // this.$refs.slide1.offsetWidth,
-          1080,
-          slideWidth
-        ],
-        putOnlyUsedFonts: true
-        // floatPrecision: 'smart', // or "smart", default is 16
+        compress: true,
+        format: [0, 0],
+        putOnlyUsedFonts: true,
+        // precision: 0,
+        floatPrecision: 'smart' // or "smart", default is 16
       })
 
-      doc.addFileToVFS('Halvar-Breitschrift-Bold-Web.ttf', halvarBreitschrift)
-      doc.addFont('Halvar-Breitschrift-Bold-Web.ttf', 'halvar breitschrift', 'bold')
+      // doc.addFileToVFS('Halvar-Breitschrift-Bold-Web.ttf', halvarBreitschrift)
+      // doc.addFont('Halvar-Breitschrift-Bold-Web.ttf', 'halvar breitschrift', 'normal')
 
-      doc.addFileToVFS('CeraPro-Regular-normal.ttf', ceraPro)
-      doc.addFont('CeraPro-Regular-normal.ttf', 'cera pro', 'normal')
+      // doc.addFileToVFS('CeraPro-Regular-normal.ttf', ceraPro)
+      // doc.addFont('CeraPro-Regular-normal.ttf', 'cera pro', 'normal')
+
+      doc.addFont(require('./assets/fonts/halvar-breitschrift/Halvar-Breitschrift-Bold-Web.ttf'), 'halvar breitschrift', 'normal')
+      doc.addFont(require('./assets/fonts/cera-pro/CeraPro-Regular.ttf'), 'cera pro', 'normal')
 
       console.log('getFontList', doc.getFontList())
-
-      // console.log(doc.internal);
 
       const def = {
         async: true,
@@ -380,23 +370,15 @@ export default {
         // scrollY: 0,
       }
 
-      const worker = doc.html(null, {
-        worker: true
-        // html2canvas: {
-        //   scale: 1,
-        //   width: slideWidth,
-        //   height: this.$refs.slide1.offsetHeight,
-        //   windowHeight: this.$refs.slide1.offsetHeight,
-        //   windowWidth: slideWidth,
-        //   backgroundColor: '#0fffff',
-        // },
-      })
-
       const slides = [
         this.$refs.slide1,
         this.$refs.slide2,
         this.$refs.slide3
       ]
+
+      console.log('getCurrentPageInfo', doc.internal.getCurrentPageInfo())
+
+      console.log(doc, doc.internal)
 
       doc.context2d.save()
 
@@ -414,112 +396,58 @@ export default {
           size.height < size.width ? 'l' : 'p'
         )
 
+        console.log('getCurrentPageInfo', doc.internal.getCurrentPageInfo())
+
         doc.context2d.save()
 
         await html2canvas(slide, def)
       }
 
-      // for (const f of fnArr) {
-      //   console.log('ыаппп')
-      //   await f()
-      // }
-
       // doc.addImage(canvas, 'CANVAS', 0, 0, this.$refs.slide3.offsetWidth, this.$refs.slide3.offsetHeight)
 
       // doc.context2d.restore()
 
-      // doc.save('a4.pdf')
-      if (this.$refs.iframe) {
-        this.$refs.iframe.src = doc.output('bloburl')
-      } else {
-        if (type === 'new') {
+      doc.deletePage(1)
+      doc.setLanguage('ru')
+
+      switch (type) {
+        case 'new':
           doc.output('dataurlnewwindow')
-        } else if (type === 'save') {
+          break
+        case 'save':
           doc.save()
-        } else {
+          break
+        case 'print':
+        default:
           doc.autoPrint()
           // doc.autoPrint({ variant: 'javascript' })
-          // doc.setLanguage('ru')
-          // doc.save()
 
           if (!this.printIframe) {
             this.printIframe = document.createElement('iframe')
             this.printIframe.style.display = 'none'
             document.body.appendChild(this.printIframe)
+
+            this.printIframe.contentWindow.onafterprint = (event) => {
+              console.log('afterprint', event)
+            }
+
+            // this.printIframe.contentWindow.addEventListener('afterprint', (event) => {
+            //   console.log('afterprint', event)
+            //   // this.printIframe.remove()
+            //   // this.printIframe = null
+            // })
+
+            this.printIframe.src = doc.output('bloburl')
           }
-
-          this.printIframe.src = doc.output('bloburl')
-        }
-        // g.src = doc.output('dataurlstring')
-        // doc.output('dataurlnewwindow')
-        // g.document.close()
-        // g.contentWindow.print()
       }
+      // g.src = doc.output('dataurlstring')
+      // g.document.close()
+      // g.contentWindow.print()
 
-      // worker
-      //   .then(() => {
-      //     // doc.addPage([
-      //     //   this.$refs.slide1.offsetHeight,
-      //     //   this.$refs.slide1.offsetWidth,
-      //     // ], 'l')
-      //
-      //     // doc.context2d.restore()
-      //
-      //     // const k = this.$refs.slide1.offsetWidth / 1920
-      //
-      //     const options = Object.assign({}, def, {
-      //       // height: this.$refs.slide1.offsetHeight,
-      //       // windowHeight: this.$refs.slide1.offsetHeight,
-      //     })
-      //
-      //     doc.context2d.save()
-      //     return html2canvas(this.$refs.slide1, options)
-      //   })
-      //   .then((canvas) => {
-      //     doc.context2d.restore()
-      //
-      //     // const k = this.$refs.slide2.offsetWidth / 1920
-      //
-      //     doc.addPage([
-      //       this.$refs.slide2.offsetHeight,
-      //       // this.$refs.slide2.offsetWidth,
-      //       slideWidth,
-      //     ], this.$refs.slide2.offsetHeight < slideWidth ? 'l' : 'p')
-      //
-      //     const options = Object.assign({}, def, {
-      //       // backgroundColor: '#ff0fff',
-      //       // height: this.$refs.slide2.offsetHeight,
-      //       // windowHeight: this.$refs.slide2.offsetHeight,
-      //     })
-      //
-      //     doc.context2d.save()
-      //     return html2canvas(this.$refs.slide2, options)
-      //   })
-      //   .then((canvas) => {
-      //     doc.context2d.restore()
-      //
-      //     // const k = this.$refs.slide3.offsetWidth / 1920
-      //
-      //     doc.addPage([
-      //       this.$refs.slide3.offsetHeight,
-      //       // this.$refs.slide3.offsetWidth,
-      //       slideWidth,
-      //     ], this.$refs.slide2.offsetHeight < slideWidth ? 'l' : 'p')
-      //
-      //     const options = Object.assign({}, def, {
-      //       // height: this.$refs.slide3.offsetHeight,
-      //       // windowHeight: this.$refs.slide3.offsetHeight,
-      //       // scrollY: this.$refs.list.scrollTop,
-      //     })
-      //
-      //     // doc.context2d.save()
-      //
-      //     return html2canvas(this.$refs.slide3, options)
-      //   })
+      // if (this.$refs.iframe) {
+      //   this.$refs.iframe.src = doc.output('bloburl')
+      // }
     }
-    // save () {
-    //
-    // }
     // print (g) {
     //   const printWindow = window.open('', '', 'width=1920,height=1080')
     //   printWindow.document.write('<html><head><title>Print Me</title></head>')
