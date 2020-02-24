@@ -7,82 +7,20 @@
         <button @click.prevent="print('new')">Открыть в новом окне</button>
       </div>
 
-      Слайд 2
-      <div ref="slide1" class="slide tpl-about">
-        <h1>Мы - Риверстарт</h1>
-        <p>5 лет на рынке, 25 сотрудников в офисе в Нижнем Новгороде (головной офис) и Москве.</p>
-      </div>
+      <!--Слайд 2-->
+      <!--<TplAbout class="slide" />-->
 
-      Слайд 3
-      <div ref="slide2" class="slide tpl-about-2">
-        <div class="container">
-          <h3>Пару слов о нас</h3>
-          <p>
-            Лучше всего мы создаем и поддерживаем сложные веб-проекты: <span>e-commerce</span>,
-            <span>CRM</span> и <span>ERP</span>-системы, <span>личные кабинеты</span> и
-            <span>b2b</span>-порталы.
-            Пишем <span>API</span>, разрабатываем микросервисную архитектуру приложений
-            и настраиваем это под высокие нагрузки.
-          </p>
-          <p>
-            В дополнение к браузерным решениям мы создаем мобильные приложения, а также помогаем
-            нашим клиентам с юзабилити-аудитом, продвижением и маркетинговой стратегией. Методологии
-            разработки: <span>Waterfall</span>, <span>Agile</span>.
-          </p>
-        </div>
-      </div>
+      <!--Слайд 3-->
+      <!--<TplAbout2 class="slide" />-->
 
-      Слайд 4
-      <div ref="slide3" class="slide tpl-clients">
-        <div class="container">
-          <h1>С нами работают</h1>
-          <img src="./assets/clients.png" alt="">
-        </div>
-      </div>
+      <!--Слайд 4-->
+      <!--<TplClients class="slide" />-->
 
-      Слайд 5
-      <div class="slide tpl-advantages">
-        <div class="container">
-          <h1>Коротко о том, почему мы</h1>
-          <ul>
-            <li>
-              <p><strong>Фиксированная</strong> стоимость нормо-часа:</p>
-            </li>
-          </ul>
-          <table>
-            <tr>
-              <th>1300 ₽/час</th>
-              <td>Разработка</td>
-            </tr>
-            <tr>
-              <th>2000 ₽/час</th>
-              <td>Консалтинг</td>
-            </tr>
-          </table>
-        </div>
-      </div>
+      <!--Слайд 5-->
+      <!--<TplAdvantages class="slide" />-->
 
-      Слайд 6
-      <div class="slide tpl-advantages-2">
-        <div class="container">
-          <h3>Коротко о том, почему мы</h3>
-          <ul>
-            <li>
-              <p><strong>Тестировщики</strong> в штате обеспечат качественный продукт.</p>
-            </li>
-            <li>
-              <p>Пожизненная <strong>гарантия</strong> на сайты. Мы пропишем ее в договоре.</p>
-            </li>
-            <li>
-              <p>Вы не останетесь один на один с проблемами сайта.</p>
-            </li>
-            <li>
-              <p><strong>Техподдержка</strong> — треть оборота компании, и отлажена она превосходно.
-                Мы будем развивать и поддерживать проект после запуска.</p>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <!--Слайд 6-->
+      <!--<TplAdvantages2 class="slide" />-->
 
       <!--Слайд 1:-->
       <!--<Slide ref="slide1" />-->
@@ -228,17 +166,34 @@
       <!--  </div>-->
       <!--</div>-->
 
-      <div v-for="(slide, index) in slides" :key="index">
-        <div>Слайд {{ index }}</div>
-        <div>
-          <Slide v-if="slide.type === 'template1'" v-bind="slide.content" />
-          <SlideTable v-else-if="slide.type === 'tableTpl'" v-bind="slide.content" />
+      <!--<div v-for="(slide, index) in slides" :key="index">-->
+      <!--  <div>Слайд {{ index }}</div>-->
+      <!--  <div>-->
+      <!--    <Slide v-if="slide.type === 'template1'" v-bind="slide.content" />-->
+      <!--    <SlideTable v-else-if="slide.type === 'tableTpl'" v-bind="slide.content" />-->
+      <!--  </div>-->
+      <!--</div>-->
+
+
+      <div ref="slides" v-for="slide in slideList" :key="slide.id" class="my-4">
+        <div>id: {{ slide.id }}</div>
+        <div>template: {{ slide.template }}</div>
+        <div class="slide">
+          <component
+            :is="templateList[slide.template]"
+            :id="slide.id"
+            :content.sync="slide.content"
+          ></component>
         </div>
       </div>
-
-      <div>
-        <button @click.prevent="print">Print</button>
-      </div>
+      <form @submit.prevent="addSlide">
+        <select v-model="selected">
+          <option v-for="(val, key) in templateList" :value="key">
+            {{ key }}
+          </option>
+        </select>
+        <button class="btn btn-primary" type="submit">Добавить слайд</button>
+      </form>
     </div>
     <!--<iframe class="iframe" ref="iframe" src=""></iframe>-->
   </div>
@@ -249,11 +204,16 @@
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 
-// import halvarBreitschrift from './assets/fonts/halvar-breitschrift/halvar-breitschrift-bold'
-// import ceraPro from './assets/fonts/cera-pro/CeraPro-Regular'
-
 import Slide from './components/Slide.vue'
 import SlideTable from './components/SlideTable.vue'
+import TplAbout2 from './TplAbout2'
+import TplClients from './TplClients'
+import TplAdvantages from './TplAdvantages'
+import TplAdvantages2 from './TplAdvantages2'
+import TplAbout from './TplAbout'
+
+// import halvarBreitschrift from './assets/fonts/halvar-breitschrift/halvar-breitschrift-bold'
+// import ceraPro from './assets/fonts/cera-pro/CeraPro-Regular'
 
 window.html2canvas = html2canvas
 window.jsPDF = jsPDF
@@ -261,60 +221,78 @@ window.jsPDF = jsPDF
 export default {
   name: 'App',
   components: {
+    TplAbout,
+    TplAdvantages2,
+    TplAdvantages,
+    TplClients,
+    TplAbout2,
     SlideTable,
-    Slide
+    Slide,
   },
 
   data () {
     return {
-      slides: [
-        {
-          type: 'template1',
-          footer: true,
-          content: {
-            title: '<h2>Типовая процедура взаимодействия при разработке или доработке сайта</h2>',
-            body: `
-              <ul>
-                <li>
-                  <p><strong>Подписываем договор</strong> с приложениями (смета и календарный план-график работ).</p>
-                </li>
-                <li>
-                  <p><strong>Оплачивается аванс</strong> первого этапа работ (оплата производится поэтапно).</p>
-                </li>
-                <li>
-                  <p><strong>Назначаем менеджера проекта,</strong> который будет решать все вопросы — от
-                  бухгалтерских до интеграционных и дизайнерских. Его курирует аккаунт-менеджер —
-                  специалист по клиентскому счастью.</p>
-                </li>
-                <li>
-                  <p><strong>Проводим этап аналитики:</strong> мы проводим интервью Клиента, создаем черновики
-                  идей, делаем небольшой коллаж — «настроение» проекта (moodboard).</p>
-                </li>
-                <li>
-                  <p><strong>Пишем техническое задание</strong> на сайт, рисуем прототипы сайта.</p>
-                </li>
-              </ul>
-            `
-          }
-        },
-        {
-          type: 'tableTpl',
-          footer: true,
-          content: {
-            title: '<h1>Второй слайд</h1>',
-            table: [
-              ['Каталог товарных позиций', '120 ч.', '156 000 ₽', 'Каталог товаров:\n' +
-              '- разделы и подразделы, включая хлебокрошки;\n' +
-              '- карточка товара (фото, видео, свойства, цены, наличие);\n' +
-              '- список товаров (отображение, фильтры и сортировки).'],
-              ['Интеграция с учетной системой Заказчика (1С)', '80 ч.', '104 000 ₽', 'Настройка двустороннего обмена данными по номенклатуре (включая\n' +
-              'свойства, цены и наличие), заказам, статусам заказов.\n' +
-              'Не включая доработку самой учетной системы, не включая обучение\n' +
-              'работе с учетной системой.']
-            ]
-          }
-        }
-      ]
+      selected: null,
+      templateList: {
+        'tpl-about': TplAbout,
+        'tpl-about-2': TplAbout2,
+        'tpl-advantages': TplAdvantages,
+        'tpl-advantages-2': TplAdvantages2,
+        'tpl-clients': TplClients,
+      },
+      slideList: [],
+      // slides: [
+      //   {
+      //     id: 0,
+      //     template: '',
+      //   },
+      //   {
+      //     type: 'template1',
+      //     footer: true,
+      //     content: {
+      //       title: '<h2>Типовая процедура взаимодействия при разработке или доработке сайта</h2>',
+      //       body: `
+      //         <ul>
+      //           <li>
+      //             <p><strong>Подписываем договор</strong> с приложениями (смета и календарный план-график работ).</p>
+      //           </li>
+      //           <li>
+      //             <p><strong>Оплачивается аванс</strong> первого этапа работ (оплата производится поэтапно).</p>
+      //           </li>
+      //           <li>
+      //             <p><strong>Назначаем менеджера проекта,</strong> который будет решать все вопросы — от
+      //             бухгалтерских до интеграционных и дизайнерских. Его курирует аккаунт-менеджер —
+      //             специалист по клиентскому счастью.</p>
+      //           </li>
+      //           <li>
+      //             <p><strong>Проводим этап аналитики:</strong> мы проводим интервью Клиента, создаем черновики
+      //             идей, делаем небольшой коллаж — «настроение» проекта (moodboard).</p>
+      //           </li>
+      //           <li>
+      //             <p><strong>Пишем техническое задание</strong> на сайт, рисуем прототипы сайта.</p>
+      //           </li>
+      //         </ul>
+      //       `,
+      //     },
+      //   },
+      //   {
+      //     type: 'tableTpl',
+      //     footer: true,
+      //     content: {
+      //       title: '<h1>Второй слайд</h1>',
+      //       table: [
+      //         ['Каталог товарных позиций', '120 ч.', '156 000 ₽', 'Каталог товаров:\n' +
+      //         '- разделы и подразделы, включая хлебокрошки;\n' +
+      //         '- карточка товара (фото, видео, свойства, цены, наличие);\n' +
+      //         '- список товаров (отображение, фильтры и сортировки).'],
+      //         ['Интеграция с учетной системой Заказчика (1С)', '80 ч.', '104 000 ₽', 'Настройка двустороннего обмена данными по номенклатуре (включая\n' +
+      //         'свойства, цены и наличие), заказам, статусам заказов.\n' +
+      //         'Не включая доработку самой учетной системы, не включая обучение\n' +
+      //         'работе с учетной системой.'],
+      //       ],
+      //     },
+      //   },
+      // ],
     }
   },
 
@@ -336,7 +314,7 @@ export default {
         format: [0, 0],
         putOnlyUsedFonts: true,
         // precision: 0,
-        floatPrecision: 'smart' // or "smart", default is 16
+        floatPrecision: 'smart', // or "smart", default is 16
       })
 
       // doc.addFileToVFS('Halvar-Breitschrift-Bold-Web.ttf', halvarBreitschrift)
@@ -363,18 +341,19 @@ export default {
         scale: 1,
         canvas: doc.canvas,
         // width: slideWidth,
-        windowWidth: slideWidth
+        windowWidth: slideWidth,
         // x: 0,
         // y: 0,
         // scrollX: 0,
         // scrollY: 0,
       }
 
-      const slides = [
-        this.$refs.slide1,
-        this.$refs.slide2,
-        this.$refs.slide3
-      ]
+      // const slides = [
+      //   this.$refs.slide1,
+      //   this.$refs.slide2,
+      //   this.$refs.slide3,
+      // ]
+      const slides = this.$refs.slides
 
       console.log('getCurrentPageInfo', doc.internal.getCurrentPageInfo())
 
@@ -387,13 +366,13 @@ export default {
 
         const size = {
           height: slide.offsetHeight,
-          width: slideWidth
+          width: slideWidth,
           // width: slide.offsetWidth,
         }
 
         doc.addPage(
           [size.height, size.width],
-          size.height < size.width ? 'l' : 'p'
+          size.height < size.width ? 'l' : 'p',
         )
 
         console.log('getCurrentPageInfo', doc.internal.getCurrentPageInfo())
@@ -447,7 +426,7 @@ export default {
       // if (this.$refs.iframe) {
       //   this.$refs.iframe.src = doc.output('bloburl')
       // }
-    }
+    },
     // print (g) {
     //   const printWindow = window.open('', '', 'width=1920,height=1080')
     //   printWindow.document.write('<html><head><title>Print Me</title></head>')
@@ -457,7 +436,15 @@ export default {
     //   printWindow.document.close()
     //   printWindow.print()
     // },
-  }
+
+    addSlide () {
+      this.slideList.push({
+        id: this.slideList.length + 1,
+        template: this.selected,
+        // content: {},
+      })
+    },
+  },
 }
 </script>
 
