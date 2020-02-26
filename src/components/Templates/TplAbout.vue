@@ -34,7 +34,7 @@
       </div>
     </editor-menu-bubble>
 
-    <h1>{{ content.title }}</h1>
+    <h1>{{ data.content.title }}</h1>
     <!--<p>{{ content.text }}</p>-->
     <editor-content :editor="editor" />
   </div>
@@ -58,27 +58,33 @@ import {
   Strike,
   TodoItem,
   TodoList,
-  Underline,
+  Underline
 } from 'tiptap-extensions'
 
 export default {
   name: 'TplAbout',
   components: {
     EditorContent,
-    EditorMenuBubble,
+    EditorMenuBubble
   },
   props: {
+    id: {
+      type: Number
+    },
+    data: {
+      type: Object
+    }
     // text: {
     //   type: String,
     //   default: '<p>5 лет на рынке, 25 сотрудников в офисе в Нижнем Новгороде (головной офис) и Москве.</p>',
     // },
-    content: {
-      type: Object,
-      default: () => ({
-        title: 'Мы - Риверстарт',
-        text: '<p>5 лет на рынке, 25 сотрудников в офисе в Нижнем Новгороде (головной офис) и Москве.</p>',
-      }),
-    },
+    // content: {
+    //   type: Object,
+    //   default: () => ({
+    //     title: 'Мы - Риверстарт',
+    //     text: '<p>5 лет на рынке, 25 сотрудников в офисе в Нижнем Новгороде (головной офис) и Москве.</p>'
+    //   })
+    // }
   },
   data () {
     return {
@@ -100,26 +106,39 @@ export default {
           new Italic(),
           new Strike(),
           new Underline(),
-          new History(),
+          new History()
         ],
-        content: this.content.text,
+        content: this.data.content.text,
         onUpdate: ({ getHTML }) => {
           // get new content on update
           // this.text = getHTML()
-          this.content.text = getHTML()
+          this.data.content.text = getHTML()
+          this.$store.dispatch('UPDATE_SLIDE', {
+            id: this.id,
+            data: this.data
+          })
           // this.$emit('update:text', this.text)
-          this.$emit('update:content', this.content)
-        },
-      }),
+          // this.$emit('update:content', this.content)
+        }
+      })
     }
   },
+  // methods: {},
   // watch: {
-  //   content () {
-  //     this.$emit('update:content', this.content)
-  //   },
+  //   'data': {
+  //     deep: true,
+  //     handler(newVal, oldVal) {
+  //       if(!newVal) return
+  //
+  //       // this.$store.dispatch('UPDATE_SLIDE', {
+  //       //   id: this.id,
+  //       //   data: newVal,
+  //       // })
+  //     }
+  //   }
   // },
   beforeDestroy () {
     this.editor.destroy()
-  },
+  }
 }
 </script>

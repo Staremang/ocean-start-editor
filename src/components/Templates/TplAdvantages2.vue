@@ -22,6 +22,6 @@
 </template>
 <script>
 export default {
-  name: 'TplAdvantages2',
+  name: 'TplAdvantages2'
 }
 </script>

@@ -1,6 +1,6 @@
 @import 'cera-pro-font';
 @import 'halvar-breitschrift-font';
-@import 'bootstrap';
+//@import 'bootstrap';
 @import 'menububble';
 
 body {
@@ -15,8 +15,37 @@ body {
 }
 
 
-html {
+body, html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
 
+.wrapper {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  position: relative;
+  flex-grow: 1;
+  margin-right: 300px;
+  overflow-y: auto;
+}
+
+.controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  overflow: hidden;
+  background: #fff;
+  padding: 20px 20px;
+  overflow-y: auto;
 }
 
 //@page {
@@ -96,12 +125,12 @@ h2 {
 
 h3 {
   //opacity: 0.6;
+  color: #707070;
   font-family: 'Cera Pro', sans-serif;
   font-size: 30px;
   font-style: normal;
   font-weight: normal;
   line-height: 50px;
-  color: #707070;
 }
 
 ul {
@@ -135,6 +164,7 @@ li {
   overflow: hidden;
   background: #f8f8f8;
   color: #171717;
+  font-family: 'Cera Pro', sans-serif;
 }
 
 
@@ -164,6 +194,8 @@ li {
 }
 
 .tpl-about {
+  //height: 100%;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -194,6 +226,7 @@ li {
     font-weight: 500;
     letter-spacing: -0.02em;
     line-height: 58px;
+
     span {
       color: #1301f0;
     }
@@ -219,8 +252,8 @@ li {
 
   ul {
     font-size: 42px;
-    line-height: 60px;
     letter-spacing: -0.01em;
+    line-height: 60px;
 
     p {
       margin-bottom: 48px;
@@ -257,5 +290,24 @@ li {
     p {
       margin-bottom: 48px;
     }
+  }
+}
+
+
+
+//.flip-list-move {
+//  transition: transform 0.5s;
+//}
+
+.slide-preview {
+  //cursor: pointer;
+  //&:hover {
+  //  &::before {
+  //    opacity: .04;
+  //  }
+  //}
+  &_active {
+    opacity: 0.5;
+    background: #c8ebfb;
   }
 }

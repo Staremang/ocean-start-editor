@@ -19,6 +19,6 @@
 </template>
 <script>
 export default {
-  name: 'TplAbout2',
+  name: 'TplAbout2'
 }
 </script>
