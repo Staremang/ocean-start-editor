@@ -5,7 +5,6 @@ module.exports = {
     'vuetify'
   ],
 
-  css: {
-    sourceMap: true
-  }
+  publicPath: '/dev/',
+  productionSourceMap: false
 }

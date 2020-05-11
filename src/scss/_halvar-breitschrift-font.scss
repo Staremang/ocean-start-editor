@@ -8,3 +8,22 @@ $url: '../assets/fonts/halvar-breitschrift/';
   font-weight: bold;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Halvar Breit Md';
+  src: url('#{$url}HalvarBreit-Md.woff2') format('woff2'),
+  url('#{$url}HalvarBreit-Md.woff') format('woff'),
+  url('#{$url}HalvarBreit-Md.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Halvar Breit Md';
+  src: url('#{$url}HalvarBreit-MdSlanted.woff2') format('woff2'),
+  url('#{$url}HalvarBreit-MdSlanted.woff') format('woff'),
+  url('#{$url}HalvarBreit-MdSlanted.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+

@@ -1,76 +1,59 @@
-import TplAbout2 from './TplAbout2'
-import TplClients from './TplClients'
-import TplAdvantages from './TplAdvantages'
-import TplAdvantages2 from './TplAdvantages2'
-import TplAbout from './TplAbout'
-
 const templates = {
+  'tpl-hero': {
+    alias: '1) Главная',
+    type: 'tpl-hero',
+    component: () => import(/* webpackChunkName: "tpl-hero" */'./TplHero.vue')
+  },
   'tpl-about': {
-    alias: 'About',
+    alias: '2) Пару слов о нас',
     type: 'tpl-about',
-    data: {
-      content: {
-        title: 'Мы - Риверстарт',
-        text: '<p>5 лет на рынке, 25 сотрудников в офисе в Нижнем Новгороде (головной офис) и Москве.</p>'
-      }
-    },
-    component: TplAbout
+    component: () => import(/* webpackChunkName: "tpl-about" */'./TplAbout.vue')
   },
   'tpl-about-2': {
-    alias: 'About 2',
+    alias: '3) Пару слов о нас (продолжение)',
     type: 'tpl-about-2',
-    data: {},
-    component: TplAbout2
+    component: () => import(/* webpackChunkName: "tpl-about" */'./TplAbout2.vue')
   },
   'tpl-clients': {
-    alias: 'Clients',
+    alias: '4) С нами работают',
     type: 'tpl-clients',
-    data: {},
-    component: TplClients
+    component: () => import(/* webpackChunkName: "tpl-clients" */'./TplClients.vue')
   },
   'tpl-advantages': {
-    alias: 'Advantages',
+    alias: '5) Коротко о том, почему мы',
     type: 'tpl-advantages',
-    data: {},
-    component: TplAdvantages
+    component: () => import(/* webpackChunkName: "tpl-advantages" */'./TplAdvantages.vue')
   },
   'tpl-advantages-2': {
-    alias: 'Advantages 2',
+    alias: '6) Коротко о том, почему мы (продолжение)',
     type: 'tpl-advantages-2',
-    data: {},
-    component: TplAdvantages2
+    component: () => import(/* webpackChunkName: "tpl-advantages" */'./TplAdvantages2.vue')
   },
-  'tpl-ololol': {
-    alias: '----',
-    type: 'tpl-ololol',
-    data: {
-      content: {
-        title: '<h2>Типовая процедура взаимодействия при разработке или доработке сайта</h2>',
-        body: `
-          <ul>
-            <li>
-              <p><strong>Подписываем договор</strong> с приложениями (смета и календарный план-график работ).</p>
-            </li>
-            <li>
-              <p><strong>Оплачивается аванс</strong> первого этапа работ (оплата производится поэтапно).</p>
-            </li>
-            <li>
-              <p><strong>Назначаем менеджера проекта,</strong> который будет решать все вопросы — от
-              бухгалтерских до интеграционных и дизайнерских. Его курирует аккаунт-менеджер —
-              специалист по клиентскому счастью.</p>
-            </li>
-            <li>
-              <p><strong>Проводим этап аналитики:</strong> мы проводим интервью Клиента, создаем черновики
-              идей, делаем небольшой коллаж — «настроение» проекта (moodboard).</p>
-            </li>
-            <li>
-              <p><strong>Пишем техническое задание</strong> на сайт, рисуем прототипы сайта.</p>
-            </li>
-          </ul>
-        `
-      }
-    }
-  }
+  'tpl-table': {
+    alias: '7) Смета проекта',
+    type: 'tpl-table',
+    component: () => import(/* webpackChunkName: "tpl-table" */'./TplTable.vue')
+  },
+  'tpl-8': {
+    alias: '8) Процедура взаимодействия',
+    type: 'tpl-8',
+    component: () => import(/* webpackChunkName: "tpl" */'./Tpl8.vue')
+  },
+  'tpl-9': {
+    alias: '9) Процедура взаимодействия (продолжение)',
+    type: 'tpl-9',
+    component: () => import(/* webpackChunkName: "tpl" */'./Tpl9.vue')
+  },
+  'tpl-nikonov': {
+    alias: '10) Никонов',
+    type: 'tpl-nikonov',
+    component: () => import(/* webpackChunkName: "tpl-person" */'./TplNikonov.vue')
+  },
+  'tpl-contacts': {
+    alias: '11) Контакты',
+    type: 'tpl-contacts',
+    component: () => import(/* webpackChunkName: "tpl-contacts" */'./TplContacts.vue')
+  },
 }
 
 export default templates
