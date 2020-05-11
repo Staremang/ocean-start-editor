@@ -1,9 +1,17 @@
 <template>
   <div class="tpl-hero">
-    <img class="tpl-hero__bg" src="../../assets/slide-1.jpg" alt="">
+    <img
+      class="tpl-hero__bg"
+      src="../../assets/slide-1.jpg"
+      alt=""
+    >
     <div class="container">
       <div class="tpl-hero__header">
-        <img class="tpl-hero__logo" src="@/assets/river-logo.png" alt="Риверстарт">
+        <img
+          class="tpl-hero__logo"
+          src="@/assets/river-logo.png"
+          alt="Риверстарт"
+        >
       </div>
       <TextEditor
         v-model="content.text"

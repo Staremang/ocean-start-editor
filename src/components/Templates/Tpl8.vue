@@ -15,7 +15,6 @@ import SlideFooter from '../SlideFooter'
 import TextEditor from '../editor/TextEditor'
 import myMixin from './mixin'
 
-
 const content = () => ({
   text: `
           <h2>Типовая процедура взаимодействия при разработке или доработке сайта</h2>
@@ -40,7 +39,6 @@ const content = () => ({
             </li>
           </ul>`
 })
-
 
 export default {
   name: 'Tpl8',

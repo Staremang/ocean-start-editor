@@ -54,8 +54,8 @@ export default {
           })
         }
       }
-    },
-  },
+    }
+  }
   // methods: {
   //   onChange (content) {
   //     // const data = this.data

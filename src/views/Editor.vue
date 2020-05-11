@@ -32,7 +32,10 @@
           </v-list-item-title>
         </v-list-item>
 
-        <v-list-item to="/preview" target="_blank">
+        <v-list-item
+          to="/preview"
+          target="_blank"
+        >
           <!--<v-list-item-action>-->
           <!--  <v-icon color="grey darken-1">-->
           <!--    pageview-->
@@ -111,7 +114,6 @@
     <!--  <NewComp2 />-->
     <!--</template>-->
 
-
     <!--<v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">-->
     <!--  <v-card>-->
     <!--    <v-toolbar dark color="primary">-->
@@ -186,4 +188,3 @@ export default {
   }
 }
 </script>
-

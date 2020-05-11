@@ -1,6 +1,10 @@
 <template>
   <div class="tpl-person">
-    <img src="../../assets/slide-10.jpg" alt="" class="tpl-person__bg">
+    <img
+      src="../../assets/slide-10.jpg"
+      alt=""
+      class="tpl-person__bg"
+    >
     <div class="container">
       <div class="tpl-person__text">
         Предлагаю не откладывать<br>

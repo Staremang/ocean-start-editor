@@ -58,7 +58,6 @@ import SlideFooter from '../SlideFooter'
 import TextEditor from '../editor/TextEditor'
 import myMixin from './mixin'
 
-
 const content = () => ({
   text: `
           <h1>Коротко о том, почему мы</h1>

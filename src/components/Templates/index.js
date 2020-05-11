@@ -53,7 +53,7 @@ const templates = {
     alias: '11) Контакты',
     type: 'tpl-contacts',
     component: () => import(/* webpackChunkName: "tpl-contacts" */'./TplContacts.vue')
-  },
+  }
 }
 
 export default templates

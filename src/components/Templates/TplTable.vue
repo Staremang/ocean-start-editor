@@ -101,7 +101,9 @@
                 text
                 @click="editorDialog = true"
               >
-                <v-icon left>add_circle_outline</v-icon>
+                <v-icon left>
+                  add_circle_outline
+                </v-icon>
                 Создать новую строку
               </v-btn>
             </v-toolbar>
@@ -289,10 +291,14 @@
         </tbody>
         <tfoot>
           <tr class="bg-blue t-total">
-            <td class="ttl">Итого стоимость работ</td>
-            <td class="num"></td>
-            <td class="num">834 626 ₽</td>
-            <td class="dsc"></td>
+            <td class="ttl">
+              Итого стоимость работ
+            </td>
+            <td class="num" />
+            <td class="num">
+              834 626 ₽
+            </td>
+            <td class="dsc" />
           </tr>
           <tr class="bg-gray">
             <td

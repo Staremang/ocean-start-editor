@@ -33,14 +33,14 @@ const router = new VueRouter({
         {
           path: '',
           name: 'editor',
-          component: () => import(/* webpackChunkName: "editor" */ '../views/EditorSpace.vue'),
+          component: () => import(/* webpackChunkName: "editor" */ '../views/EditorSpace.vue')
           // component: Editor
         },
         {
           path: '/preview',
           name: 'editor-preview',
           // meta: { requiresAuth: true },
-          component: () => import(/* webpackChunkName: "editor" */ '../views/EditorPreview.vue'),
+          component: () => import(/* webpackChunkName: "editor" */ '../views/EditorPreview.vue')
         }
       ]
     },

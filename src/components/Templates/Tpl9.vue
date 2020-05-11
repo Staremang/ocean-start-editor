@@ -15,7 +15,6 @@ import SlideFooter from '../SlideFooter'
 import TextEditor from '../editor/TextEditor'
 import myMixin from './mixin'
 
-
 const content = () => ({
   text: `
           <h3>Типовая процедура взаимодействия при разработке или доработке сайта</h3>

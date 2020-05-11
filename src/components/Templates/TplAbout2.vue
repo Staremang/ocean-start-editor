@@ -46,10 +46,9 @@ export default {
       type: Object,
       default: content
     }
-  },
+  }
 }
 </script>
-
 
 <style lang="scss">
 .tpl-about-2 {
